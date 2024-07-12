@@ -3,6 +3,7 @@ package com.alibou.springdemo.student;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
+// InMemoryStudentService
 @Service
 public class InMemoryStudentService implements StudentService {
 
