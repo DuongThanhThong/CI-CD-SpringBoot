@@ -27,13 +27,17 @@ jobs:
           mvn clean 
           mvn -B package --file pom.xml
 
+      - name: set env
+        run: |
+          echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
       - name: Build Docker Image
         uses: docker/build-push-action@v6
         with:
           context: .
           dockerfile: Dockerfile
           push: false
-          tags: ${{ secrets.DOCKER_USERNAME }}/spring-boot-for-beginners:$(date-'%Y-%m-%d%H-%M-%S')
+          tags: ${{ secrets.DOCKER_USERNAME }}/spring-boot-for-beginners:${{ env.NOW }}
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -47,5 +51,4 @@ jobs:
           context: .
           dockerfile: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/spring-boot-for-beginners:$(date-'%Y-%m-%d%H-%M-%S')
-
+          tags: ${{ secrets.DOCKER_USERNAME }}/spring-boot-for-beginners:${{ env.NOW }}
